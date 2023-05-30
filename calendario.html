@@ -1,0 +1,149 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+        <style>
+            
+            html, body {
+  height: 100%;
+}
+            @font-face {
+              font-family: ubuntu;
+              src: url(Ubuntu-Regular.ttf);
+            }
+            html{
+                font-family:ubuntu,sans-serif;
+            }
+            .dia{
+                width:14.2857%;
+                height:16%;
+                
+                float:left;
+                text-align:right;
+                padding:10px;
+                box-sizing: border-box;
+            }
+            .estrecho{
+                height:8%;
+                position:relative;
+                top:-8%; 
+                border-top:1px solid grey;
+            }
+            .real{
+                border-bottom:1px solid grey;
+                border-radius:10px;
+            }
+            .cabecera{
+                height:40px;
+                text-align:center;
+            }
+            .seleccionado{
+               /*border:3px solid red;*/
+            }
+            section{
+                border:0px solid black;
+                page-break-after:always;
+                height:100%;
+            }
+            h1{
+                font-size:48px;
+                text-align:right;
+               
+            }
+            .festivo{
+                background:rgb(250,250,250);
+            }
+        </style>
+    </head>
+    <body>
+        
+        <script>
+            var empiezalunes = false
+            if(empiezalunes == true){
+                empuja = -1
+            }else{
+                empuja = 0
+            }
+            //var fecha = new Date();
+            //var primerdia = new Date(fecha.getFullYear(), fecha.getMonth(), 1);
+            //console.log(primerdia.getDay())
+           
+            for(var loopanio = 2023;loopanio<=2028;loopanio++){
+            for(var loopmes = 0;loopmes<=11;loopmes++){
+                semana = 0;
+                numerodiasmes = new Date(loopanio, loopmes+1, 0).getDate();
+                console.log("dias mes:"+numerodiasmes)
+               casillas = 0
+                cadena =""
+                console.log("hola")
+                // Creo una variable contador que vale 1
+                var casillas = 1;
+                //////////////////////PRIMERO CREO DIAS VACIOS//////////////////////
+                // Creo un objeto fecha
+                fecha2 = new Date(loopanio,(loopmes),1);
+                console.log(fecha2)
+                diaprimero = new Date(loopanio, loopmes, 1).getDay();
+                console.log("primero:"+diaprimero)
+                diafinal = new Date(loopanio, loopmes + 1, 0).getDay();
+                console.log("final:"+diafinal)
+                mes = 0
+                
+                switch(fecha2.getMonth()){
+                    case 0:mes="jan";break;
+                        case 1:mes="feb";break;
+                        case 2:mes="mar";break;
+                        case 3:mes="apr";break;
+                        case 4:mes="may";break;
+                        case 5:mes="jun";break;
+                        case 6:mes="jul";break;
+                        case 7:mes="aug";break;
+                        case 8:mes="sept";break;
+                        case 9:mes="oct";break;
+                        case 10:mes="nov";break;
+                        case 11:mes="dec";break;
+                }
+                
+                cadena += "<h1>"+mes+fecha2.getFullYear()+"</h1>"
+                 cadena += "<section>"
+                if(empiezalunes == false){
+                    cadena += "<div class='dia cabecera'>Sun</div><div class='dia cabecera'>Mon</div><div class='dia cabecera'>Tue</div><div class='dia cabecera'>Wed</div><div class='dia cabecera'>The</div><div class='dia cabecera'>Fri</div><div class='dia cabecera'>Sat</div>"
+                }else{
+                    cadena += "<div class='dia cabecera'>Mon</div><div class='dia cabecera'>Tue</div><div class='dia cabecera'>Wed</div><div class='dia cabecera'>Thu</div><div class='dia cabecera'>Fri</div><div class='dia cabecera'>Sat</div><div class='dia cabecera'>Sun</div>"
+                }
+                
+                for(diaprevio = 0+empuja;diaprevio <= diaprimero-1+empuja;diaprevio++){
+                    cadena += "<div class='dia'></div>"
+                    casillas++;
+                }
+                
+                for(let dia = 1;dia<=numerodiasmes;dia++){
+                    var fecha = new Date();
+                    var clase = ""
+                    if(dia == fecha.getDate()){
+                        clase = "seleccionado"
+                    }
+                    if(semana >= 5){
+                        clase = "estrecho"
+                    }
+                    if(casillas % 7 -1 == 0 || casillas % 7  == 0){
+                        clase += " festivo "
+                    }
+                    cadena += "<div class='dia real "+clase+"'>"+dia+"<div class=''></div></div>" 
+                    if(casillas % 7 == 0){
+                        cadena += "<div style='clear:both'></div>" 
+                        semana++;
+                    }
+                    casillas++;
+                }
+                for(var i = diafinal;i<6;i++){
+                        cadena += "<div class='dia'></div>"
+                    }
+                cadena += "<div style='clear:both'></div>"
+                cadena += "</section>"
+                $("body").append(cadena)
+                }
+            }
+        </script>
+    </body>
+</html>
